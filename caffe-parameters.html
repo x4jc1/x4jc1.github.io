@@ -50,15 +50,34 @@
 									<hr class="major" />
 
 									<h2>solver.prototxt</h2>
-									<p> net: 网络描述文件;</br>
-										test_iter: 测试时, 需要迭代的次数, test_iter*batchsize(测试集) >= 测试集的大小. 测试集的bathsize在prototxt文件里设置; </br>
-										test_interval: 训练的时候, 每迭代test_interval次就进行一次测试;</br>
+									<p> solver配置文件用来协调整个模型的运作. caffe程序运行必须带的一个参数就是solver配置文件. </br>
+										在Deep Learning中, loss function往往是非凸的, 没有解析解, 所以需要通过优化方法来求解. 
+											solver的主要作用就是交替调用forward算法和backward算法来更新参数, 从而最小化loss, 是一种迭代的优化算法.
+										net: 网络模型描述文件, i.e. train_val.prototxt, 也可以是train_net和test_net;</br>
+										test_iter: 测试时, 需要迭代的次数, test_iter * batch_size(测试集) >= 测试集的大小. 测试集的bath_size在prototxt文件里设置. 
+											这个要与test layer中的batch_size结合起来理解. 例如, mnist数据中测试样本总数为10000, 一次性执行全部数据效率很低, 
+											因此将测试数据分成几个批次来执行, 每个批次的数量就是batch_size. 假设batch_size为100, 则需要迭代100次才能将10000个数据全部执行完. 
+											因此test_iter为100. 执行完一次全部数据, 称之为一个epoch; </br>
+										test_interval: 训练的时候, 每迭代#test_interval次就进行一次测试;</br>
 										base_lr: 基础学习效率；</br>
-										lr_policy: "fixed", 固定学习速率, 始终等于base_lr. </br>
-										&emsp;&emsp;&emsp;&emsp; "step", 步进衰减, base_lr * gamma^(floor(iter/stepsize)). </br>
-										&emsp;&emsp;&emsp;&emsp;"exp", 指数衰减, base_lr * gamma^(iter). </br>
-										&emsp;&emsp;&emsp;&emsp;  "inv", 倒数衰减, base_lr *(1+gamma * iter)^(-power). </br>
-										&emsp;&emsp;&emsp; "multistep": 多步衰减， 与步进衰减类似， 允许非均匀步进值(stepvalue).
+										lr_policy: 对基础学习率进行调整, "fixed", 固定学习速率, 始终等于base_lr. </br>
+											&emsp;&emsp;&emsp;&emsp; "step", 步进衰减, 如果设置为step, 则还需要设置一个stepsize, base_lr * gamma^(floor(iter/stepsize)), iter表示当前的迭代次数. </br>
+											&emsp;&emsp;&emsp;&emsp; "exp", 指数衰减, base_lr * gamma^(iter). </br>
+											&emsp;&emsp;&emsp;&emsp; "inv", 倒数衰减, 如果设置为inv,还需要设置一个power, base_lr *(1+gamma * iter)^(-power). </br>
+											&emsp;&emsp;&emsp;&emsp; "multistep": 多步衰减， 与步进衰减类似， 允许非均匀步进值(stepvalue), 如果设置为multistep, 则还需要设置一个stepvalue. 
+												这个参数和step很相似, step是均匀等间隔变化, 而multistep则是根据stepvalue值变化.</br>
+											&emsp;&emsp;&emsp;&emsp; "ploy": 多项式衰减, 在max_iter时达到0, base_lr*(1-iter/max_iter)^(power).</br>
+											&emsp;&emsp;&emsp;&emsp; "sigmoid": S型衰减，base_lr * (1/(1+exp^(-gamma * (iter-stepsize))));</br>
+										gamma: 调节学习速率的因子; </br>
+										power: 调节学习速率的因子; </br>
+										stepsize: 调节学习速率的因子, 每隔#stepsize降低学习速率;</br>
+										display: 每#display次打印一次Loss; </br>
+										max_iter: 训练最大迭代次数; 太小, 会导致没有收敛, 精确度很低. 设置太大, 会导致震荡, 浪费时间;</br>
+										momentum: 冲量, 有助于SGD更快学习;</br>
+										weight_decay: 权衰量, 用来防止过拟合的参数, 样本越多, 该值越小. 模型参数越多, 该值越大; 一般建议, 0.0005;</br>
+										snapshot: 迭代#snapshot次，保存一次 *.caffemodel, *.solverstate;</br>
+										snapshot_prefix: *.caffemodel, *.solverstate保存的位置;</br>
+										solver_mode: 训练模式, CPU or GPU.
 										</p>
 									<p> </p>
 
