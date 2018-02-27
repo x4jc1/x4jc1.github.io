@@ -38,7 +38,7 @@
 							<!-- Content -->
 								<section>
 									<header class="main">
-										<h1>Generic</h1>
+										<h1>Caffe</h1>
 									</header>
 
 									<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
@@ -59,18 +59,18 @@
 											因此将测试数据分成几个批次来执行, 每个批次的数量就是batch_size. 假设batch_size为100, 则需要迭代100次才能将10000个数据全部执行完. 
 											因此test_iter为100. 执行完一次全部数据, 称之为一个epoch; </br>
 										test_interval: 训练的时候, 每迭代#test_interval次就进行一次测试;</br>
-										base_lr: 基础学习效率；</br>
+										base_lr: 基础学习效率；</br></br>
 										lr_policy: 对基础学习率进行调整, "fixed", 固定学习速率, 始终等于base_lr. </br>
 											&emsp;&emsp;&emsp;&emsp; "step", 步进衰减, 如果设置为step, 则还需要设置一个stepsize, base_lr * gamma^(floor(iter/stepsize)), iter表示当前的迭代次数. </br>
 											&emsp;&emsp;&emsp;&emsp; "exp", 指数衰减, base_lr * gamma^(iter). </br>
 											&emsp;&emsp;&emsp;&emsp; "inv", 倒数衰减, 如果设置为inv,还需要设置一个power, base_lr *(1+gamma * iter)^(-power). </br>
-											&emsp;&emsp;&emsp;&emsp; "multistep": 多步衰减， 与步进衰减类似， 允许非均匀步进值(stepvalue), 如果设置为multistep, 则还需要设置一个stepvalue. 
-												这个参数和step很相似, step是均匀等间隔变化, 而multistep则是根据stepvalue值变化.</br>
+											&emsp;&emsp;&emsp;&emsp; "multistep": 多步衰减, 允许非均匀步进值(stepvalue), 如果设置为multistep, 则还需要设置一个stepvalue. 
+												和step很相似, step是均匀等间隔变化, 而multistep则是根据stepvalue值变化.</br>
 											&emsp;&emsp;&emsp;&emsp; "ploy": 多项式衰减, 在max_iter时达到0, base_lr*(1-iter/max_iter)^(power).</br>
-											&emsp;&emsp;&emsp;&emsp; "sigmoid": S型衰减，base_lr * (1/(1+exp^(-gamma * (iter-stepsize))));</br>
+											&emsp;&emsp;&emsp;&emsp; "sigmoid": S型衰减，base_lr * (1/(1+exp^(-gamma * (iter-stepsize))));</br></br>
 										gamma: 调节学习速率的因子; </br>
 										power: 调节学习速率的因子; </br>
-										stepsize: 调节学习速率的因子, 每隔#stepsize降低学习速率;</br>
+										stepsize: 每隔#stepsize降低学习速率;</br>
 										display: 每#display次打印一次Loss; </br>
 										max_iter: 训练最大迭代次数; 太小, 会导致没有收敛, 精确度很低. 设置太大, 会导致震荡, 浪费时间;</br>
 										momentum: 冲量, 有助于SGD更快学习;</br>
@@ -80,13 +80,7 @@
 										solver_mode: 训练模式, CPU or GPU.
 										</p>
 									<p> </p>
-
-									<hr class="major" />
-
-									<h2>Magna etiam veroeros</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-									<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
-
+									
 									<hr class="major" />
 
 									<h2>Lorem aliquam bibendum</h2>
