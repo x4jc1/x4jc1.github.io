@@ -41,15 +41,32 @@
 										<h1>Caffe</h1>
 									</header>
 
-									<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+									<h3>Preformatted</h3>
+									<pre><code>
+net: "/home/jesse/deeplearning-cats-dogs-tutorial/caffe_models/caffe_model_1/caffenet_train_val_1.prototxt"
+test_iter: 1000
+test_interval: 1000
+base_lr: 0.001
+lr_policy: "step"
+gamma: 0.1
+stepsize: 2500
+display: 50
+max_iter: 40000
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 5000
+snapshot_prefix: "/home/jesse/deeplearning-cats-dogs-tutorial/caffe_models/caffe_model_1/caffe_model_1"
+solver_mode: CPU
+									</code></pre>
 
 									<hr class="major" />
 
 									<h2>solver.prototxt</h2>
-									<p> solver配置文件用来协调整个模型的运作. caffe程序运行必须带的一个参数就是solver配置文件. </br>
+									<p> solver配置文件用来协调整个模型的运作. caffe程序运行必须带的一个参数就是solver配置文件.
 										在Deep Learning中, loss function往往是非凸的, 没有解析解, 所以需要通过优化方法来求解. 
-											solver的主要作用就是交替调用forward算法和backward算法来更新参数, 从而最小化loss, 是一种迭代的优化算法.</br></br>
-										net: 网络模型描述文件, i.e. train_val.prototxt, 也可以是train_net和test_net;</br>
+											solver的主要作用就是交替调用forward算法和backward算法来更新参数, 从而最小化loss, 是一种迭代的优化算法.</p>
+											
+									<p>	net: 网络模型描述文件, i.e. train_val.prototxt, 也可以是train_net和test_net;</br>
 										test_iter: 测试时, 需要迭代的次数, test_iter * batch_size(测试集) >= 测试集的大小. 测试集的bath_size在prototxt文件里设置. 
 											这个要与test layer中的batch_size结合起来理解. 例如, mnist数据中测试样本总数为10000, 一次性执行全部数据效率很低, 
 											因此将测试数据分成几个批次来执行, 每个批次的数量就是batch_size. 假设batch_size为100, 则需要迭代100次才能将10000个数据全部执行完. 
