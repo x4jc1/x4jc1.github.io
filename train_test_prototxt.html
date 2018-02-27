@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Caffe - Jesse Ccc's Blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Editorial</strong> by Jesse Ccc</a>
+									<ul class="icons">
+										<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon fa fa-weixin"><span class="label">Wechat</span></a></li>
+										<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon fa-medium"><span class="label">Medium</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Caffe Train_test.prototxt</h1>
+									</header>
+
+									<h2>Train_test.prototxt</h2>
+									<pre><code>
+net: "/home/jesse/deeplearning-cats-dogs-tutorial/caffe_models/caffe_model_1/train_test.prototxt"
+test_iter: 1000
+test_interval: 1000
+base_lr: 0.001
+lr_policy: "step"
+gamma: 0.1
+stepsize: 2500
+display: 50
+max_iter: 40000
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 5000
+snapshot_prefix: "/home/jesse/deeplearning-cats-dogs-tutorial/caffe_models/caffe_model_1/caffe_model_1"
+solver_mode: CPU
+									</code></pre>
+
+									<hr class="major" />
+
+									<h2>solver.prototxt</h2>
+									<p> solver配置文件用来协调整个模型的运作. caffe程序运行必须带的一个参数就是solver配置文件.
+										在Deep Learning中, loss function往往是非凸的, 没有解析解, 所以需要通过优化方法来求解. 
+											solver的主要作用就是交替调用forward算法和backward算法来更新参数, 从而最小化loss, 是一种迭代的优化算法.</p>
+											
+									<p>	net: 网络模型描述文件, i.e. train_val.prototxt, 也可以是train_net和test_net;</p>
+									<p>	test_iter: 测试时, 需要迭代的次数, test_iter * batch_size(测试集) >= 测试集的大小. 测试集的bath_size在prototxt文件里设置. 
+											这个要与test layer中的batch_size结合起来理解. 例如, mnist数据中测试样本总数为10000, 一次性执行全部数据效率很低, 
+											因此将测试数据分成几个批次来执行, 每个批次的数量就是batch_size. 假设batch_size为100, 则需要迭代100次才能将10000个数据全部执行完. 
+											因此test_iter为100. 执行完一次全部数据, 称之为一个epoch; </p>
+									<p>	test_interval: 训练的时候, 每迭代#test_interval次就进行一次测试;</p>
+									<p>	base_lr: 基础学习效率；</p>
+									<p>	lr_policy: 对基础学习率进行调整的策略, "fixed", 固定学习速率, 始终等于base_lr. </br>
+											&emsp;&emsp;&emsp;&emsp; "step", 步进衰减, 如果设置为step, 则还需要设置一个stepsize, base_lr * gamma^(floor(iter/stepsize)), iter表示当前的迭代次数. </br>
+											&emsp;&emsp;&emsp;&emsp; "exp", 指数衰减, base_lr * gamma^(iter). </br>
+											&emsp;&emsp;&emsp;&emsp; "inv", 倒数衰减, 如果设置为inv,还需要设置一个power, base_lr *(1+gamma * iter)^(-power). </br>
+											&emsp;&emsp;&emsp;&emsp; "multistep": 多步衰减, 允许非均匀步进值(stepvalue), 如果设置为multistep, 则还需要设置一个stepvalue. 
+												和step很相似, step是均匀等间隔变化, 而multistep则是根据stepvalue值变化.</br>
+											&emsp;&emsp;&emsp;&emsp; "ploy": 多项式衰减, 在max_iter时达到0, base_lr*(1-iter/max_iter)^(power).</br>
+											&emsp;&emsp;&emsp;&emsp; "sigmoid": S型衰减，base_lr * (1/(1+exp^(-gamma * (iter-stepsize))));</br></br>
+									<p>	gamma: 调节学习速率的因子; </p>
+									<p>	power: 调节学习速率的因子; </p>
+									<p>	stepsize: 每隔#stepsize降低学习速率;</p>
+									<p>	display: 每#display次打印一次Loss; </p>
+									<p>	max_iter: 训练最大迭代次数; 太小, 会导致没有收敛, 精确度很低. 设置太大, 会导致震荡, 浪费时间;</p>
+									<p>	momentum: 冲量, 有助于SGD更快学习;</p>
+									<p>	weight_decay: 权衰量, 用来防止过拟合的参数, 样本越多, 该值越小. 模型参数越多, 该值越大; 一般建议, 0.0005;</p>
+									<p>	snapshot: 迭代#snapshot次，保存一次 *.caffemodel, *.solverstate;</p>
+									<p>	snapshot_prefix: *.caffemodel, *.solverstate保存的位置;</p>
+									<p>	solver_mode: 训练模式, CPU or GPU.</p>
+									
+								</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="generic.html">Generic</a></li>
+										<li><a href="elements.html">Elements</a></li>
+										<li>
+											<span class="opener">Caffe</span>
+											<ul>
+												<li><a href="#">Solver.Prototxt</a></li>
+												<li><a href="#">Train_test.prototxt</a></li>
+												<li><a href="#">Tempus Magna</a></li>
+												<li><a href="#">Feugiat Veroeros</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Etiam Dolore</a></li>
+										<li><a href="#">Adipiscing</a></li>
+										<li>
+											<span class="opener">Another Submenu</span>
+											<ul>
+												<li><a href="#">Lorem Dolor</a></li>
+												<li><a href="#">Ipsum Adipiscing</a></li>
+												<li><a href="#">Tempus Magna</a></li>
+												<li><a href="#">Feugiat Veroeros</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Maximus Erat</a></li>
+										<li><a href="#">Sapien Mauris</a></li>
+										<li><a href="#">Amet Lacinia</a></li>
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Ante interdum</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="#" class="button">More</a></li>
+									</ul>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Get in touch</h2>
+									</header>
+									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+									<ul class="contact">
+										<li class="fa-envelope-o"><a href="#">information@untitled.tld</a></li>
+										<li class="fa-phone">(000) 000-0000</li>
+										<li class="fa-home">1234 Somewhere Road #8254<br />
+										Nashville, TN 00000-0000</li>
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
