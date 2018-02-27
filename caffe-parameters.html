@@ -52,7 +52,7 @@
 									<h2>solver.prototxt</h2>
 									<p> solver配置文件用来协调整个模型的运作. caffe程序运行必须带的一个参数就是solver配置文件. </br>
 										在Deep Learning中, loss function往往是非凸的, 没有解析解, 所以需要通过优化方法来求解. 
-											solver的主要作用就是交替调用forward算法和backward算法来更新参数, 从而最小化loss, 是一种迭代的优化算法.
+											solver的主要作用就是交替调用forward算法和backward算法来更新参数, 从而最小化loss, 是一种迭代的优化算法.</br></br>
 										net: 网络模型描述文件, i.e. train_val.prototxt, 也可以是train_net和test_net;</br>
 										test_iter: 测试时, 需要迭代的次数, test_iter * batch_size(测试集) >= 测试集的大小. 测试集的bath_size在prototxt文件里设置. 
 											这个要与test layer中的batch_size结合起来理解. 例如, mnist数据中测试样本总数为10000, 一次性执行全部数据效率很低, 
