@@ -50,8 +50,14 @@
 									<hr class="major" />
 
 									<h2>solver.prototxt</h2>
-									<p> net: 网络描述文件；</p>
-									<p> test_iter: 测试时，需要迭代的次数，test_iter*batchsize(测试集) >= 测试集的大小。测试集的bathsize在prototxt文件里设置；</p>
+									<p> net: 网络描述文件;</br>
+										test_iter: 测试时, 需要迭代的次数, test_iter*batchsize(测试集) >= 测试集的大小. 测试集的bathsize在prototxt文件里设置; </br>
+										test_interval: 训练的时候, 每迭代test_interval次就进行一次测试;</br>
+										base_lr: 基础学习效率；</br>
+										lr_policy: "fixed", 固定学习速率, 始终等于base_lr. </br>
+												   "step", 步进衰减, base_lr * gamma^(floor(iter/stepsize)). "exp", 指数衰减, base_lr * gamma^(iter). "inv", 倒数衰减, base_lr *(1+gamma * iter)^(-power). "multistep": 多步衰减， 与步进衰减类似， 允许非均匀步进值(stepvalue).
+										</p>
+									<p> </p>
 
 									<hr class="major" />
 
